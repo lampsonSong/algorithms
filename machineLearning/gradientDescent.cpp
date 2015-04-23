@@ -58,25 +58,49 @@ int main()
 	float theta_0_new;
 	float theta_1_new;
 	float theta_2_new;
+
+	//record the step length
+	float delta[3] = {0,0,0};
+	float eps = 0.1;
+	int count = 1;
+	bool flag;
 	/*
 	   train theta
 	*/
-	for(int i = 0; i < 8; i++)
-	{	
-		E = theta_0 + theta_1 * trainData[i][0] + theta_2 * trainData[i][1] - trainData[i][2];
-	
+	do
+	{
+			for(int i = 0; i < 8; i++)
+			{	
+				E = theta_0 + theta_1 * trainData[i][0] + theta_2 * trainData[i][1] - trainData[i][2];
+			
 
-		for(int j = 0; j < 8; j++)
-		{	
-			/*theta_0_new = theta_0 - alpha * E * ;
-			theta_1_new = theta_1 - alpha * E * ;
-			theta_2_new = theta_2 - alpha * E * ;
-			*/
-			cout<<theta_j<<endl;
-		}
-	}
-	cout<<theta_0_new<<endl;
-	cout<<E<<endl;
+				theta_0_new = theta_0 - alpha * E * trainData[i][0];
+				theta_1_new = theta_1 - alpha * E * trainData[i][1];
+				theta_2_new = theta_2 - alpha * E * trainData[i][2];
+					
+			}
+			cout<<"The "<<count<<" time"<<endl;
+			cout<<theta_0_new<<endl;
+			cout<<theta_1_new<<endl;
+			cout<<theta_2_new<<endl;
+			cout<<" "<<endl;
+
+			//test the step length
+			delta[0] = fabs(theta_0_new - theta_0);
+			delta[1] = fabs(theta_1_new - theta_1);
+			delta[2] = fabs(theta_2_new - theta_2);
+
+			if(delta[0] > eps || delta[1] > eps || delta[2] > eps)
+			{
+				flag = true;
+				theta_0 = theta_0_new;
+				theta_1 = theta_1_new;
+				theta_2 = theta_2_new;
+				count++;
+			}
+			else
+				flag = false;
+	}while(flag);
 
 	return 0;
 }
