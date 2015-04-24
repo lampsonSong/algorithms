@@ -51,7 +51,7 @@ int main()
 	//inititial state theta_0 = theta_1 = theta_2 = 0
 	float theta[3] = {0,0,0};
 	float E = 0;
-	float alpha = 0.01;
+	float alpha = 0.000001;
 
 	float theta_new[3] = {0,0,0};
 
@@ -59,6 +59,8 @@ int main()
 	float delta[3] = {0,0,0};
 	float eps = 0.1;
 	int count = 1;
+	//loss function
+	float jx = 0;
 	bool flag = true;
 	/*
 	   train theta
@@ -70,23 +72,26 @@ int main()
 			{
 				for(int i = 0; i < 8; i++)
 				{	
-					//sum of differences
+					//sum of differences, jx could be placed out of the j loop to reduce computation
+					jx = theta[0] + theta[1] * trainData[i][0] + theta[2] * trainData[i][1] - trainData[i][2];
+			
 					if(j == 0)
-						E +=  theta[0] + theta[1] * trainData[i][0] + theta[2] * trainData[i][1] - trainData[i][2];
+						E += jx;
 					else
 					{
-						E += (theta[0] + theta[1] * trainData[i][0] + theta[2] * trainData[i][1] - trainData[i][2]) * trainData[i][j-1];
+						E += jx * trainData[i][j-1];
 					}
 				}
-				cout<<"E is "<<E<<endl;
-				getchar();
-				theta_new[j] = theta[j] - alpha * E;
+				theta_new[j] = theta[j] - alpha * E / 8;
 
 				//test the step length
 				delta[j] = fabs(theta_new[j] - theta[j]);
 				
 				E = 0;
 			}
+			
+			//show the loss function J(theta) = 1/2 * (jx)^2
+			cout<< "loss number is : "<<jx*jx<<endl;
 
 			//determine whether stop the program
 			for(int m = 0; m < 3; m++)
@@ -111,9 +116,8 @@ int main()
 			cout<<theta_new[2]<<endl;
 			cout<<" "<<endl;
 			
-			getchar();	
 			count++;
-	}while(flag);
-
+	//}while(flag);
+	}while(count < 4);
 	return 0;
 }
