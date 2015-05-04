@@ -31,7 +31,7 @@
 */
 
 /*
- * Newton method: the step might be too large.
+ * Newton method: it is used to optimize  data.
 */
 
 #include <iostream>
@@ -53,7 +53,7 @@ int main()
 	
 	//hypothesis result     profit = h(x) = theta_0 + theta_1*x_1 + theta_2*x_2
 	//inititial state theta_0 = theta_1 = theta_2 = 0
-	float theta[3] = {0,0,0};
+	float theta[3] = {0.000004,0.000002,0.18};
 	float E = 0;
 	float alpha = 0.000000001;
 
@@ -61,11 +61,11 @@ int main()
 
 	//record the step length
 	float delta[3] = {0,0,0};
-	float eps = 0.1;
+	float eps = 50;
 	int count = 1;
+	int flag = 0;
 	//loss function
 	float jx = 0;
-	bool flag = true;
 	/*
 	   train theta
 	*/
@@ -83,10 +83,10 @@ int main()
 						E += jx;
 					else
 					{
-						E += jx * trainData[i][j-1];
+						E += jx / trainData[i][j-1];
 					}
 				}
-				theta_new[j] = theta[j] - alpha * E / 8;
+				theta_new[j] = theta[j] - E / 8;
 
 				//test the step length
 				delta[j] = fabs(theta_new[j] - theta[j]);
@@ -94,34 +94,30 @@ int main()
 				E = 0;
 			}
 			
-			//show the loss function J(theta) = 1/2 * (jx)^2
-			cout<< "loss number is : "<<jx*jx<<endl;
 
 			//determine whether stop the program
+			flag = 0;
 			for(int m = 0; m < 3; m++)
 			{
 				if(delta[m] < eps)
 				{
-					flag = false;
+					flag ++;
 				}
-				else
-					flag = true;
 			}
-			
-			if(flag)
+			if(flag < 3)
 			{
 				theta[0] = theta_new[0];
 				theta[1] = theta_new[1];
 				theta[2] = theta_new[2];
 			}
 			cout<<"The "<<count<<" time"<<endl;
-			cout<<theta_new[0]<<endl;
-			cout<<theta_new[1]<<endl;
-			cout<<theta_new[2]<<endl;
+			cout<<theta[0]<<endl;
+			cout<<theta[1]<<endl;
+			cout<<theta[2]<<endl;
 			cout<<" "<<endl;
 			
 			count++;
-	}while(flag);
-//	}while(count < 4);
+//	}while(flag < 3);
+	}while(count < 5);
 	return 0;
 }
