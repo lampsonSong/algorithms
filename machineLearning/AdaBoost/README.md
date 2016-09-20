@@ -10,3 +10,8 @@
 
 `maxClassifier:` The max number of the used weak classifers <br>
 
+
+##Classifier
+
+The strong and weak classifiers are named based on their ability to classify data. Different classifier
+should be selected according to the practical situations.

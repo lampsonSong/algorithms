@@ -9,16 +9,19 @@
 
 import numpy as np
 import scipy as sp
+from weakClassifier import weakClassifier
 
-# the input data
-value = np.array([0,1,2,3,4,5,6,7,8,9])
-labels = np.array([1,1,1,-1,-1,-1,1,1,1,-1])
-weight = np.array([0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1])
-predict_label = np.array([0,0,0,0,0,0,0,0,0,0])
+import pdb
 
-num_data = len(value)
+X = np.array([[1,2,3,4],[5,6,7,8]])
+Y = np.array([1,1,-1,-1])
 
-# initial the threshold value with a random number
-threshold_value = 0
 
-value - threshold_value
+Y.shape = (1,len(Y))
+label = Y.transpose()
+
+weight = np.array([0.25,0.25,0.25,0.25])
+
+# pdb.set_trace()
+we = weakClassifier(X,label)
+we.train(weight)
