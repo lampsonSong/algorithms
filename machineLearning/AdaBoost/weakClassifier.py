@@ -29,13 +29,31 @@ class weakClassifier:
 	#train objective: adjust the weights
 	def train(self,weight):
 
+		min_err = 10000
+		threshold = 0
+		direction = 0
+
 		for i in range(self.numData):
 			item = self.X[i,:]
 			# item.shape = [1,self.cols]
 			# item = item.transpose()
 			self.weight = np.array(weight)
-			self.findErrMin(item,1,weight)
-			# print self.X[i,:]
+			err,i_threshold = self.findErrMin(item,1,weight)
+			
+			if(min_err>err):
+				min_err = err
+				threshold = i_threshold
+				direction = 1
+
+			err,i_threshold = self.findErrMin(item,-1,weight)
+
+			if(min_err>err):
+				min_err = err
+				threshold = i_threshold
+				direction = -1
+
+		return min_err,threshold,direction
+
 
 
 
@@ -48,6 +66,7 @@ class weakClassifier:
 		step_len = float(end-start)/float(steps)
 
 		min_err = 10000
+		min_threshold = 0
 
 		for threshold in np.arange(start,end,step_len):
 			now_label = np.ones((len(item),1))
@@ -60,6 +79,8 @@ class weakClassifier:
 
 			err = np.sum(err_label*weight)
 
-			print err
+			if(min_err>err):
+				min_err = err
+				min_threshold = threshold
 
-			# if(err<min_err):
+		return min_err,min_threshold
