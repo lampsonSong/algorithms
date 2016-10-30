@@ -15,3 +15,7 @@
 
 The strong and weak classifiers are named based on their ability to classify data. Different classifier
 should be selected according to the practical situations.
+
+# Description of AdaBoost:
+
+Optimize the weight of each item iteratively.
