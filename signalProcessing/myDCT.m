@@ -19,7 +19,7 @@ coe = double( zeros(n,m) );
 
 
 for y = 1:m
-   col_ww = cos( (2*(0:m-1)+1)*(y-1)*pi/(2*m) );
+   row_ww = cos( (2*(0:m-1)+1)*(y-1)*pi/(2*m) );
     
    if(y==1)
        cv = sqrt(1/m);
@@ -28,7 +28,7 @@ for y = 1:m
    end
    
     for x = 1:n
-        row_ww = cos( (2*(0:n-1)+1)*(x-1)*pi/(2*n) );
+        col_ww = cos( (2*(0:n-1)+1)*(x-1)*pi/(2*n) );
 
        if(x==1)
            cu = sqrt(1/n);
@@ -37,7 +37,7 @@ for y = 1:m
        end
        
        
-       coe(x,y) = cu*cv * col_ww*(row_ww*input_data)';
+       coe(x,y) = cu*cv * row_ww*(col_ww*input_data)';
     end
 end
 
