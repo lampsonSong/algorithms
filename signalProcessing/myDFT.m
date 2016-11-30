@@ -23,7 +23,7 @@ y = 0:1:h-1;
 for col_ind = 0:h-1
     row_ww = exp(-2*pi*i*(y*col_ind)/h);
     for row_ind = 0:w-1
-        col_ww = exp(-2*pi*i*(x*row_ind)/w);
+        col_ww = exp(-2*pi*i*(x*row_ind)/w)
         
         coe(row_ind+1,col_ind+1) = row_ww*(col_ww*data)';
     end
