@@ -1,3 +1,8 @@
+/*
+	* Input  : an int array[]
+	* Output : max length of decrease subsequence
+	*/
+
 #include <iostream>
 
 using namespace std;
