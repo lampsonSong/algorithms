@@ -9,33 +9,37 @@ template <class T>  //Even passed by template, the array is passed by reference
 int lis(T& A)
 {
 	int length = sizeof(A)/sizeof(A[0]);
-	int len = 0;
-	A[0] = 10;
+	int result = 0;
+	
 	//pointer storing sub-length
 	int* d = new int[length];
 
 	for(int i = 0; i < length; i++)
 	{
-		d[i] = 1;
-		for(int j = 0; j < i; j++)
-		{
-			if( A[i] >= A[j] && d[j] + 1 > d[i] )
-				d[i] = d[j] + 1;
-		}
-		//pick the biggest length
-		if( d[i] > len)
-			len = d[i];
+			if(i == 0)
+		   d[i] = 1;
+			else
+			{
+			  if(A[i] <= A[i-1])
+							d[i] = d[i-1] + 1;
+					else
+							d[i] = 1;
+			}
+		 
+		 //pick the biggest length
+		 if( d[i] > result)
+		 	result = d[i];
 	}
 	//remember to free what have claimed.
-	free(d);
+	delete d;
 
-	return len;
+	return result;
 }
 
 int main()
 {
 	//test array data
-	int A[] = {2,1,5,3,6,4,8,9,7};
+	int A[] = {2,3,1,4,6,3,1,2,5,7,9};
 	
 	cout<<"The longest increasing subsequence length is "<<lis(A)<<endl;
 	return 0;
