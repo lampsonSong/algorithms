@@ -10,8 +10,6 @@
 
 #include <iostream>
 
-using namespace std;
-
 template<typename T> 
 T ForAdd(T a,int times)
 {
@@ -19,6 +17,20 @@ T ForAdd(T a,int times)
 	for(int i=0; i<times; i++)
 	{
 		returnVal += a;
+		a = a + 1;
+	}
+
+	return returnVal;
+}
+
+template<typename T> 
+T ForAdd_reference(T& a,int times)
+{
+	T returnVal=0;
+	for(int i=0; i<times; i++)
+	{
+		returnVal += a;
+		a = a + 1;
 	}
 
 	return returnVal;
@@ -26,7 +38,13 @@ T ForAdd(T a,int times)
 
 int main()
 {
-	cout<<"Out is :"<<ForAdd(1,3)<<endl;
-	cout<<"Out is :"<<ForAdd(3.1,3)<<endl;
+  int a = 1;
+		float b = 3.1;
+		std::cout<<"Out is :"<<ForAdd<int>(a,3)<<std::endl;
+	 std::cout<<"Out is :"<<ForAdd<float>(b,3)<<std::endl;
+		std::cout<<"after calling, a is : "<<a<<std::endl;
+
+		std::cout<<"Out is :"<<ForAdd_reference<int>(a,3)<<std::endl;
+		std::cout<<"after calling, a is : "<<a<<std::endl;
 }
 
